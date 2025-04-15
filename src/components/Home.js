@@ -1,28 +1,39 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from "../assets/logo.png";
+import './home.css';
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>🏐 Welcome to Volleyball Tournaments Management</h1>
-      <p>Organize, search and get information about tournaments easily</p>
+    <div className="home-container">
+      <div className="home-top">
+        {/* Logo and Title Section */}
+        <div className="logo-title">
+          <img 
+            src={logo} 
+            alt="Senecarios Logo" 
+            className="home-logo"
+          />
+          <h1 className="home-title">Senecarios</h1>
+          <h2 className="home-subtitle">Volleyball Tournament Manager</h2>
+        </div>
 
-      <div style={{ marginTop: '30px' }}>
-        <button onClick={() => navigate('/register')} style={buttonStyle}>➕ Register a Tournament</button>
-        <button onClick={() => navigate('/search')} style={buttonStyle}>🔍 Search For a Tournament</button>
-        <button onClick={() => navigate('/manage')} style={buttonStyle}>⚙️ Manage a Tournament</button>
+        {/* Right-aligned Buttons */}
+        <div className="button-group">
+          <button onClick={() => navigate('/register')}>➕ Register a Tournament</button>
+          <button onClick={() => navigate('/search')}>🔍 Search For a Tournament</button>
+          <button onClick={() => navigate('/manage')}>⚙️ Manage a Tournament</button>
+        </div>
       </div>
+
+      <p className="home-welcome">
+        Welcome to Senecarios! Organize, manage, and search volleyball tournaments with ease. 
+        Create new tournaments, edit existing ones, and keep track of all your events.
+      </p>
     </div>
   );
-};
-
-const buttonStyle = {
-  margin: '10px',
-  padding: '10px 20px',
-  fontSize: '16px',
-  cursor: 'pointer'
 };
 
 export default Home;

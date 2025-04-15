@@ -1,0 +1,44 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4f46e5;
+    padding: 1rem 2rem;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+  
+  .navbar-links a.active {
+    background-color: #4338ca;
+  }
+  
+  .navbar-links .signout-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  

@@ -17,18 +17,18 @@ const EditTournament = () => {
   const handleSave = async (formData) => {
     try {
       await axios.put(`http://localhost:5000/api/tournaments/${id}`, formData);
-      alert('✅ Torneo actualizado');
+      alert('✅ Tournament updated');
       navigate('/manage');
     } catch (err) {
       console.error(err);
-      alert('❌ Error al actualizar');
+      alert('❌ Error while updating');
     }
   };
 
   return initialData ? (
     <TournamentForm initialData={initialData} onSave={handleSave} />
   ) : (
-    <p>Cargando datos del torneo...</p>
+    <p>Loading Tournament...</p>
   );
 };
 

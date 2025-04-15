@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BackToHomeButton from './BackToHomeButton';
+import './TournamentForm.css';
 
 const TournamentForm = ({ initialData = null, onSave }) => {
   const [form, setForm] = useState({
@@ -10,7 +11,6 @@ const TournamentForm = ({ initialData = null, onSave }) => {
 
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Solo setea los valores iniciales una vez si initialData existe
   useEffect(() => {
     if (initialData && !isInitialized) {
       setForm({
@@ -33,87 +33,51 @@ const TournamentForm = ({ initialData = null, onSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(onSave); 
-    
     if (typeof onSave === 'function') {
       onSave(form);
     } else {
-      console.warn('⚠️ Not proportion a function onSave');
+      console.warn('⚠️ Not providing a valid onSave function');
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2>{initialData?._id ? '✏️ Edit tournament' : '➕ register tournament'}</h2>
+    <div className="form-container">
+      <h2>{initialData?._id ? '✏️ Edit tournament' : '➕ Register tournament'}</h2>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <form onSubmit={handleSubmit} className="tournament-form">
         <input
           type="text"
           name="name"
-          placeholder="name of the tournament"
+          placeholder="Name of the tournament"
           value={form.name}
           onChange={handleChange}
           required
-          style={styles.input}
         />
 
         <input
           type="text"
           name="number"
-          placeholder="organizer number"
+          placeholder="Organizer number"
           value={form.number}
           onChange={handleChange}
           required
-          style={styles.input}
         />
 
         <input
           type="text"
           name="location"
-          placeholder="location"
+          placeholder="Location"
           value={form.location}
           onChange={handleChange}
           required
-          style={styles.input}
         />
 
-        <button type="submit" style={styles.button}>
-          Save
-        </button>
+        <button type="submit">Save</button>
       </form>
 
       <BackToHomeButton />
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '40px auto',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '10px',
-    textAlign: 'center'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px'
-  },
-  input: {
-    padding: '10px',
-    fontSize: '16px'
-  },
-  button: {
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer'
-  }
 };
 
 export default TournamentForm;

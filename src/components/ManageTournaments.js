@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackToHomeButton from '../components/BackToHomeButton';
+import './ManageTournament.css';
 
 const ManageTournaments = () => {
   const [tournaments, setTournaments] = useState([]);
@@ -17,13 +18,13 @@ const ManageTournaments = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('are you sure you want to delete this tournament?')) return;
+    if (!window.confirm('Are you sure you want to delete this tournament?')) return;
 
     try {
       await axios.delete(`http://localhost:5000/api/tournaments/${id}`);
       fetchTournaments();
     } catch (error) {
-      console.error('❌ Error we can not delete this tournament:', error);
+      console.error('❌ Error: could not delete the tournament:', error);
     }
   };
 
@@ -32,17 +33,21 @@ const ManageTournaments = () => {
   }, []);
 
   return (
-    <div>
-      <h2>📋 Tournament Management</h2>
+    <div className="manage-container">
+      <h2 className="manage-heading">📋 Tournament Management</h2>
       {tournaments.length === 0 ? (
-        <p>No Tournaments registered.</p>
+        <p>No tournaments registered.</p>
       ) : (
-        <ul>
+        <ul className="tournament-list">
           {tournaments.map(t => (
-            <li key={t._id}>
-              <strong>{t.name}</strong> - {t.number} in {t.location}
-              <button onClick={() => navigate(`/edit/${t._id}`)} style={{ marginLeft: '10px' }}>✏️ Edit</button>
-              <button onClick={() => handleDelete(t._id)} style={{ marginLeft: '5px', color: 'red' }}>🗑️ Delete</button>
+            <li key={t._id} className="tournament-item">
+              <div className="tournament-info">
+                <strong>{t.name}</strong> — {t.number} in {t.location}
+              </div>
+              <div className="button-group">
+                <button onClick={() => navigate(`/edit/${t._id}`)}>✏️ Edit</button>
+                <button onClick={() => handleDelete(t._id)}>🗑️ Delete</button>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import BackToHomeButton from '../components/BackToHomeButton';
+import './Search.css';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +18,7 @@ const Search = () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/tournaments/search?q=${searchTerm}`);
       if (res.data.length === 0) {
-        setMessage('😕 No tournaments find with that name.');
+        setMessage('😕 No tournaments found with that name.');
       } else {
         setMessage('');
       }
@@ -39,13 +40,13 @@ const Search = () => {
       setResults(res.data);
     } catch (error) {
       console.error('❌ Error while getting the tournament:', error);
-      setMessage('❌ Error while getting the tournament:');
+      setMessage('❌ Error while getting the tournament');
     }
   };
 
   return (
-    <div>
-      <h2>🔍 Look for a tournament</h2>
+    <div className="search-container">
+      <h2>🔍 Look for a Tournament</h2>
       <input
         type="text"
         placeholder="Name of the tournament"
@@ -54,17 +55,18 @@ const Search = () => {
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
       />
       <button onClick={handleSearch}>Search</button>
-      <button onClick={handleViewAll} style={{ marginLeft: '10px' }}>See all</button>
+      <button onClick={handleViewAll}>See All</button>
 
-      {message && <p style={{ color: 'red', marginTop: '10px' }}>{message}</p>}
+      {message && <p>{message}</p>}
 
       <ul>
         {results.map((t) => (
           <li key={t._id}>
-            <strong>{t.name}</strong> - {t.number} en {t.location}
+            <strong>{t.name}</strong> — {t.number} in {t.location}
           </li>
         ))}
       </ul>
+
       <BackToHomeButton />
     </div>
   );
