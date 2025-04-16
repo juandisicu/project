@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
   
     try {
       const newTournament = new Tournament({ name, number, location });
-      await newTournament.save(); // <- Aquí puede estar fallando
+      await newTournament.save();
       console.log('✅ Tournament saved in MongoDB:', newTournament);
       res.status(201).json({ message: 'Torneo creado', data: newTournament });
     } catch (error) {

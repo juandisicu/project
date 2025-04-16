@@ -1,37 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UserForm from '../components/UserForm';  // We'll need to create a UserForm component for user registration
-import './Register.css';
+import TournamentForm from '../components/TournamentForm';
 
 const Register = () => {
   const navigate = useNavigate();
 
+  // Esta es la función que pasamos como prop a TournamentForm
   const handleSave = async (formData) => {
     try {
-      // Validate the form data before sending it (optional)
-      if (!formData.username || !formData.email || !formData.password) {
-        alert('❌ All fields are required');
-        return;
-      }
-
-      // Send POST request to backend for user registration
-      await axios.post('http://localhost:5000/api/users', formData);
-
-      // Success message and navigate to login page
-      alert('✅ User registered successfully');
-      navigate('/login');  // Redirect to login after registration
+      await axios.post('http://localhost:5000/api/tournaments', formData);
+      alert('✅ Tournament registered succesfully ');
+      navigate('/');
     } catch (error) {
-      // Error handling
-      console.error('❌ Error: could not register the user:', error);
-      alert('There was an error while registering the user. Please try again later.');
+      console.error('❌ Error al registrar el torneo:', error);
+      alert('Hubo un error al registrar el torneo');
     }
   };
 
   return (
-    <div className="register-container">
-      <h1 className="register-heading">Register a New User</h1>
-      <UserForm onSave={handleSave} />
+    <div>
+      <h1 style={{ textAlign: 'center' }}>Register new tournament</h1>
+      {/* Asegúrate de que onSave esté pasando correctamente */}
+      <TournamentForm onSave={handleSave} />
     </div>
   );
 };

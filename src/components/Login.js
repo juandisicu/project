@@ -5,13 +5,15 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   // Handle login process
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
 
-    // Assuming you have an API endpoint for login, for example, POST /api/users/login
     try {
       const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
@@ -24,15 +26,22 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Save user data (e.g., token) in localStorage or sessionStorage
-        localStorage.setItem('user', JSON.stringify(data.user)); // Save user data (or token)
-        navigate('/'); // Navigate to home page after successful login
+        // Based on your backend response, save the token
+        localStorage.setItem('token', data.token);
+        
+        // Optionally save username for UI purposes
+        localStorage.setItem('username', username);
+        
+        // Navigate to home page after successful login
+        navigate('/');
       } else {
         setError(data.message || 'Invalid username or password');
       }
     } catch (err) {
       setError('Error logging in. Please try again.');
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,8 +70,12 @@ const Login = () => {
           style={styles.input}
         />
 
-        <button type="submit" style={styles.button}>
-          Login
+        <button 
+          type="submit" 
+          style={styles.button}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
 
@@ -81,6 +94,7 @@ const Login = () => {
   );
 };
 
+// Assuming these styles are defined elsewhere
 const styles = {
   container: {
     maxWidth: '400px',

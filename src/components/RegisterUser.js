@@ -8,16 +8,18 @@ const RegisterUser = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-
+    setError('');
+    
+    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
 
     const newUser = {
       username,
@@ -25,12 +27,31 @@ const RegisterUser = () => {
       password,
     };
 
-
-    localStorage.setItem('user', JSON.stringify(newUser));
-
-
-    alert('✅ Registration successful');
-    navigate('/login'); 
+    setIsLoading(true);
+    
+    try {
+      // Send registration request to your backend API
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+      
+      alert('✅ Registration successful');
+      navigate('/login');
+    } catch (err) {
+      setError(err.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -78,8 +99,12 @@ const RegisterUser = () => {
           style={styles.input}
         />
 
-        <button type="submit" style={styles.button}>
-          Register
+        <button 
+          type="submit" 
+          style={styles.button}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Registering...' : 'Register'}
         </button>
       </form>
 
