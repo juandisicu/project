@@ -4,18 +4,18 @@ const router = express.Router();
 
 // Crear torneo
 router.post('/', async (req, res) => {
-    console.log('📦 Body recibido:', req.body);
+    console.log('📦 Body received:', req.body);
   
     const { name, number, location } = req.body;
   
     try {
       const newTournament = new Tournament({ name, number, location });
       await newTournament.save(); // <- Aquí puede estar fallando
-      console.log('✅ Torneo guardado en MongoDB:', newTournament);
+      console.log('✅ Tournament saved in MongoDB:', newTournament);
       res.status(201).json({ message: 'Torneo creado', data: newTournament });
     } catch (error) {
-      console.error('❌ Error al guardar torneo:', error); // 👈 imprime todo el error
-      res.status(400).json({ message: 'Error al crear torneo', error });
+      console.error('❌ Error saving the tournament:', error);
+      res.status(400).json({ message: 'Error while creating the tournament', error });
     }
   });
 
@@ -25,19 +25,19 @@ router.get('/search', async (req, res) => {
   
     try {
       const results = await Tournament.find({
-        name: { $regex: q, $options: 'i' } // búsqueda insensible a mayúsculas
+        name: { $regex: q, $options: 'i' } 
       });
       res.json(results);
     } catch (error) {
-      console.error('❌ Error en búsqueda:', error);
-      res.status(500).json({ message: 'Error al buscar torneos' });
+      console.error('❌ Error while searching :', error);
+      res.status(500).json({ message: 'Error while searching the tournament' });
     }
   });
 
-  //obtener todos los torneos
+
   router.get('/', async (req, res) => {
     try {
-      const all = await Tournament.find().sort({ name: 1 }); // orden ascendente
+      const all = await Tournament.find().sort({ name: 1 });
       res.json(all);
     } catch (err) {
       res.status(500).json({ error: 'Error al obtener torneos' });
