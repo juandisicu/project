@@ -7,6 +7,7 @@ import ManageTournaments from './components/ManageTournaments';
 import RegisterUser from './components/RegisterUser';
 import Login from './components/Login';
 import Register from './components/Register';
+import Profile from './components/profile'; // Add this import
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/manage" element={<ManageTournaments />} />
         <Route path="/edit/:id" element={<EditTournament />} />
+        <Route path="/profile" element={<Profile />} /> {/* Add this route */}
       </Routes>
     </Router>
   );

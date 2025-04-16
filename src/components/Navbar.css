@@ -1,39 +1,112 @@
 /* Navbar Styles */
 .navbar {
-    background-color: #6a5acd;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-links {
-    list-style-type: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-  }
-  
-  .navbar-link {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .navbar-link:hover {
-    text-decoration: underline;
-  }
-  
-  .signout-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .signout-button:hover {
-    text-decoration: underline;
-  }
-  
+  background-color: #6a5acd;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between; /* Ensures items are spaced out */
+  align-items: center;
+}
+
+.navbar-links {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
+.signout-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signout-button:hover {
+  text-decoration: underline;
+}
+
+/* Switch Styling (for Dark Mode toggle) */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fdfefedc;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.3em;
+  bottom: 0.35em;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -10px 10px 0px inset,
+     rgba(0, 0, 0, 0.09) 0px -1px 15px -8px;
+  background-color: #ff99fd;
+}
+
+.input__check:checked + .slider {
+  background-color: #17202A;
+}
+
+.input__check:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+
+/* Light Mode */
+body {
+  background-color: white;
+  color: black;
+}
+
+.navbar {
+  background-color: #6a5acd;
+  color: white;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-mode .navbar {
+  background-color: #333;
+}
+
+/* Smooth transition for dark/light mode */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

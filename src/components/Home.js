@@ -5,17 +5,14 @@ import './home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   return (
     <div className="home-container">
       <div className="home-top">
         {/* Logo and Title Section */}
         <div className="logo-title">
-          <img 
-            src={logo} 
-            alt="Senecarios Logo" 
-            className="home-logo"
-          />
+          <img src={logo} alt="Senecarios Logo" className="home-logo" />
           <h1 className="home-title">Senecarios</h1>
           <h2 className="home-subtitle">Volleyball Tournament Manager</h2>
         </div>
@@ -25,6 +22,11 @@ const Home = () => {
           <button onClick={() => navigate('/register')}>➕ Register a Tournament</button>
           <button onClick={() => navigate('/search')}>🔍 Search For a Tournament</button>
           <button onClick={() => navigate('/manage')}>⚙️ Manage a Tournament</button>
+          {token ? (
+            <button onClick={() => navigate('/profile')}>👤 My Profile</button>
+          ) : (
+            <button onClick={() => navigate('/login')}>🔐 Login</button>
+          )}
         </div>
       </div>
 
